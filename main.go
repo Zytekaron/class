@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	cli.Init("0.1.1")
+	cli.Init("0.1.2")
 
 	err := storage.Open()
 	if err != nil {

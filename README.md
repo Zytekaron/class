@@ -1,6 +1,6 @@
 # class
 
-<b>Version:</b> v0.1.1
+<b>Version:</b> v0.1.2
 
 A file utility program to associate extra information with files,
 including a name, description, tags, and key/value data.
