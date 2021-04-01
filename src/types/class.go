@@ -10,16 +10,16 @@ type Class struct {
 	Name string
 	Desc string
 	Tags TagList
-	Meta map[string]interface{}
+	Meta map[string]string
 }
 
 type TagList []string
 
 func NewClass(id string) *Class {
 	return &Class{
-		ID: id,
+		ID:   id,
 		Tags: make([]string, 0),
-		Meta: make(map[string]interface{}),
+		Meta: make(map[string]string),
 	}
 }
 
