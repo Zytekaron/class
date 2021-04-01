@@ -1,31 +1,59 @@
 package main
 
 import (
+	"bufio"
 	"class/src/cli"
 	"class/src/storage"
 	"fmt"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
-	cli.Init("1.0")
+	cli.Init("0.1.0")
 
-	db, err := storage.Init()
+	err := storage.Init()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer storage.Close()
 
 	if len(os.Args) == 1 {
-		fmt.Println("usage: class <action> <id> [data...]")
-		fmt.Println("try `class help`")
+		repl()
+		return
+	}
+
+	err = run(os.Args[1:])
+	if err != nil {
+		fmt.Println(err.Error())
 		os.Exit(2)
 	}
+}
 
-	if len(os.Args) == 2 {
-		cli.Run(os.Args[1], []string{})
+func repl() {
+	fmt.Print("> ")
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		input := scanner.Text()
+
+		if strings.ToLower(input) == "exit" {
+			os.Exit(0)
+		}
+
+		err := run(strings.Split(input, " "))
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+
+		fmt.Print("\n> ")
 	}
+}
 
-	cli.Run(os.Args[1], os.Args[2:])
+func run(input []string) error {
+	if len(input) == 1 {
+		return cli.Run(input[0], []string{})
+	} else {
+		return cli.Run(input[0], input[1:])
+	}
 }
