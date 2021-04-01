@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"class/src/types"
 	"github.com/dgraph-io/badger/v3"
+	"github.com/zytekaron/class/v1/types"
 )
 
 func Load(name string) (*types.Class, error) {

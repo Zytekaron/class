@@ -1,8 +1,8 @@
 package cli
 
 import (
-	"class/src/class"
 	"fmt"
+	"github.com/zytekaron/class/v1/class"
 )
 
 func classCreate(id string) error {

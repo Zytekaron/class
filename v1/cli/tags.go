@@ -1,9 +1,9 @@
 package cli
 
 import (
-	"class/src/class"
 	"errors"
 	"fmt"
+	"github.com/zytekaron/class/v1/class"
 	"strings"
 )
 

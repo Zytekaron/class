@@ -1,8 +1,8 @@
 package class
 
 import (
-	"class/src/storage"
-	"class/src/types"
+	"github.com/zytekaron/class/v1/storage"
+	"github.com/zytekaron/class/v1/types"
 )
 
 func GetDesc(id string) (desc string, err error) {

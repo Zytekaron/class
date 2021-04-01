@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"class/src/types"
+	"github.com/zytekaron/class/v1/types"
 )
 
 // A function that takes in a class pointer and

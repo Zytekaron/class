@@ -1,7 +1,7 @@
 package class
 
 import (
-	"class/src/storage"
+	"github.com/zytekaron/class/v1/storage"
 )
 
 func Init() error {
