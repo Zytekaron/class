@@ -1,4 +1,4 @@
-module class
+module github.com/zytekaron/class
 
 go 1.15
 
