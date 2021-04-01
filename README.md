@@ -16,6 +16,7 @@ This program has not undergone strict testing and may be unstable. Use it with c
 ## Build Instructions
 
 - Install Go from https://golang.org/dl (tested: v1.15.8)
+- `git clone https://github.com/Zytekaron/class`
 - `go build -o class main.go`
 - that's it, folks
 
