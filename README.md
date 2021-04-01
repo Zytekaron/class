@@ -37,7 +37,7 @@ import (
 )
 
 func main() {
-    err := class.Init() // Opens the database connection internally
+    err := class.Open() // Opens the database connection internally
     if err != nil {
     	log.Fatal(err)
     }
