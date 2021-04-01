@@ -5,6 +5,7 @@ import (
 	"github.com/zytekaron/class/v1/types"
 )
 
+// Get the description of a class
 func GetDesc(id string) (desc string, err error) {
 	err = storage.Handle(id, func(class *types.Class) bool {
 		desc = class.Desc
@@ -13,6 +14,7 @@ func GetDesc(id string) (desc string, err error) {
 	return
 }
 
+// Set the description of a class
 func SetDesc(id string, desc string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		class.Desc = desc

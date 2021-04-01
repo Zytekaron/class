@@ -5,15 +5,18 @@ import (
 	"github.com/zytekaron/class/v1/types"
 )
 
-func Load(name string) (*types.Class, error) {
+// Get a class from the db by id
+func Get(name string) (*types.Class, error) {
 	return load(name, false)
 }
 
+// Create a new class with an id, save it, and return it
 func Create(id string) (*types.Class, error) {
 	class := types.NewClass(id)
 	return class, Save(class)
 }
 
+// Save a class to the db
 func Save(class *types.Class) error {
 	bytes, err := class.ToBytes()
 	if err != nil {
@@ -25,6 +28,7 @@ func Save(class *types.Class) error {
 	})
 }
 
+// Delete a class from the db
 func Delete(id string) error {
 	return db.Update(func(txn *badger.Txn) error {
 		return txn.Delete([]byte(id))
@@ -55,4 +59,13 @@ func load(id string, upsert bool) (*types.Class, error) {
 	}
 
 	return types.ParseClass(data)
+}
+
+func contains(slice []string, str string) bool {
+	for _, e := range slice {
+		if e == str {
+			return true
+		}
+	}
+	return false
 }

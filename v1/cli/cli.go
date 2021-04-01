@@ -39,10 +39,10 @@ func Run(command string, input []string) error {
 	case "m", "am", "meta", "addmeta":
 		id, args := construct(input)
 		return classAddMeta(id, args)
-	case "um", "unmeta", "delmeta", "rmeta", "rmmeta", "removemeta":
+	case "um", "rm", "unmeta", "delmeta", "rmeta", "rmmeta", "removemeta":
 		id, args := construct(input)
 		return classRemoveMeta(id, args)
-	case "r", "rm", "del", "delete", "remove":
+	case "r", "del", "delete", "remove":
 		id, _ := construct(input)
 		return classDelete(id)
 	default:

@@ -5,6 +5,7 @@ import (
 	"github.com/zytekaron/class/v1/types"
 )
 
+// Get all the meta of a class
 func GetMeta(id string) (meta map[string]string, err error) {
 	err = storage.Handle(id, func(class *types.Class) bool {
 		meta = class.Meta
@@ -13,6 +14,7 @@ func GetMeta(id string) (meta map[string]string, err error) {
 	return
 }
 
+// Add meta of a class
 func AddMeta(id, key, value string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		class.Meta[key] = value
@@ -21,6 +23,7 @@ func AddMeta(id, key, value string) (err error) {
 	return
 }
 
+// Add a set of meta to a class
 func BulkAddMeta(id string, meta map[string]string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		for key, value := range meta {
@@ -31,6 +34,7 @@ func BulkAddMeta(id string, meta map[string]string) (err error) {
 	return
 }
 
+// Remove meta from a class
 func RemoveMeta(id, key string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		delete(class.Meta, key)
@@ -39,6 +43,7 @@ func RemoveMeta(id, key string) (err error) {
 	return
 }
 
+// Remove a set of meta from a class
 func BulkRemoveMeta(id string, keys []string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		for _, key := range keys {
@@ -49,6 +54,7 @@ func BulkRemoveMeta(id string, keys []string) (err error) {
 	return
 }
 
+// Overwrite a class's meta
 func SetMeta(id string, meta map[string]string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		class.Meta = meta
@@ -57,6 +63,7 @@ func SetMeta(id string, meta map[string]string) (err error) {
 	return
 }
 
+// Clear the meta of a class
 func ClearMeta(id string) (err error) {
 	err = storage.EnsureHandle(id, func(class *types.Class) bool {
 		class.Meta = map[string]string{}
