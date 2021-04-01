@@ -2,22 +2,27 @@ package main
 
 import (
 	"bufio"
-	"class/src/cli"
-	"class/src/storage"
 	"fmt"
+	"github.com/zytekaron/class/v1/cli"
+	"github.com/zytekaron/class/v1/storage"
 	"log"
 	"os"
 	"strings"
 )
 
 func main() {
-	cli.Init("0.1.0")
+	cli.Init("0.1.1")
 
 	err := storage.Init()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer storage.Close()
+	defer func() {
+		err := storage.Close()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}()
 
 	if len(os.Args) == 1 {
 		repl()
