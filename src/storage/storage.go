@@ -17,11 +17,15 @@ func init() {
 	}
 }
 
-func Init() (*badger.DB, error) {
+func Init() error {
 	dir := path.Join(pwd, ".class")
 	opts := badger.DefaultOptions(dir).WithLogger(nil)
 
 	database, err := badger.Open(opts)
 	db = database
-	return db, err
+	return err
+}
+
+func Close() error {
+	return db.Close()
 }

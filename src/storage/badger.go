@@ -9,6 +9,11 @@ func Load(name string) (*types.Class, error) {
 	return load(name, false)
 }
 
+func Create(id string) (*types.Class, error) {
+	class := types.NewClass(id)
+	return class, Save(class)
+}
+
 func Save(class *types.Class) error {
 	bytes, err := class.ToBytes()
 	if err != nil {
@@ -17,6 +22,12 @@ func Save(class *types.Class) error {
 
 	return db.Update(func(txn *badger.Txn) error {
 		return txn.Set([]byte(class.ID), bytes)
+	})
+}
+
+func Delete(id string) error {
+	return db.Update(func(txn *badger.Txn) error {
+		return txn.Delete([]byte(id))
 	})
 }
 
@@ -37,9 +48,7 @@ func load(id string, upsert bool) (*types.Class, error) {
 		return nil
 	})
 	if err == badger.ErrKeyNotFound && upsert {
-		class := types.NewClass(id)
-		err = Save(class)
-		return class, err
+		return Create(id)
 	}
 	if err != nil {
 		return nil, err
@@ -47,4 +56,3 @@ func load(id string, upsert bool) (*types.Class, error) {
 
 	return types.ParseClass(data)
 }
-
