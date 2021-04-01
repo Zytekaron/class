@@ -1,6 +1,6 @@
 # class
 
-<b>Version:</b> v0.1.0
+<b>Version:</b> v0.1.1
 
 A file utility program to associate extra information with files,
 including a name, description, tags, and key/value data.
@@ -31,7 +31,7 @@ This is currently also untested, so it may not work.
 package main
 
 import (
-    "github.com/zytekaron/class/src/class"
+    "github.com/zytekaron/class/v1/class"
     "log"
 )
 
