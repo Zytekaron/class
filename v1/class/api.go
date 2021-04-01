@@ -4,12 +4,12 @@ import (
 	"github.com/zytekaron/class/v1/storage"
 )
 
-// Initialize the database connection
+// Open the database connection
 //
 // This will connect to the current working directory of the program,
 // and create a `./class` database folder if one does not exist.
-func Init() error {
-	return storage.Init()
+func Open() error {
+	return storage.Open()
 }
 
 // Close the database connection
