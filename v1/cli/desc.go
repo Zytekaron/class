@@ -13,6 +13,6 @@ func classSetDesc(id string, args []string) error {
 		return err
 	}
 
-	fmt.Println("Updated class description to:", desc)
+	fmt.Println("Updated desc to:", desc)
 	return nil
 }

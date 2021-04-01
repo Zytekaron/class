@@ -18,9 +18,8 @@ func classAddMeta(id string, args []string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Updated class meta.")
-	fmt.Println("Key:", key)
-	fmt.Println("Value:", value)
+
+	fmt.Println("Added meta:", key, "=>", value)
 	return nil
 }
 
@@ -35,6 +34,6 @@ func classRemoveMeta(id string, args []string) error {
 		return err
 	}
 
-	fmt.Println("Updated class meta; deleted key:", key)
+	fmt.Println("Deleted meta:", key)
 	return nil
 }

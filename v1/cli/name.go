@@ -14,6 +14,6 @@ func classSetName(id string, args []string) error {
 		return err
 	}
 
-	fmt.Println("Updated class name to:", name)
+	fmt.Println("Updated name:", name)
 	return nil
 }
