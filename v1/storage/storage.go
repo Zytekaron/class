@@ -17,7 +17,8 @@ func init() {
 	}
 }
 
-func Init() error {
+// Open the db connection
+func Open() error {
 	dir := path.Join(pwd, ".class")
 	opts := badger.DefaultOptions(dir).WithLogger(nil)
 
@@ -26,6 +27,7 @@ func Init() error {
 	return err
 }
 
+// Close the db connection
 func Close() error {
 	return db.Close()
 }
