@@ -1,40 +1,40 @@
 package cli
 
 import (
-	"class/src/storage"
-	"class/src/types"
+	"class/src/class"
+	"errors"
 	"fmt"
-	"os"
 	"strings"
 )
 
-func classAddMeta(id string, args []string) {
+func classAddMeta(id string, args []string) error {
 	if len(args) < 2 {
-		fmt.Println("A key and value must be provided.")
-		os.Exit(2)
+		return errors.New("a key and value must be provided")
 	}
 	key := args[0]
 	value := strings.Join(args[1:], " ")
 
-	storage.EnsureHandle(id, func(class *types.Class) bool {
-		class.Meta[key] = value
-		return true
-	})
+	err := class.AddMeta(id, key, value)
+	if err != nil {
+		return err
+	}
 	fmt.Println("Updated class meta.")
 	fmt.Println("Key:", key)
 	fmt.Println("Value:", value)
+	return nil
 }
 
-func classRemoveMeta(id string, args []string) {
+func classRemoveMeta(id string, args []string) error {
 	if len(args) == 0 {
-		fmt.Println("A key must be provided.")
-		os.Exit(2)
+		return errors.New("a key must be provided")
 	}
 	key := args[0]
 
-	storage.EnsureHandle(id, func(class *types.Class) bool {
-		delete(class.Meta, key)
-		return true
-	})
+	err := class.RemoveMeta(id, key)
+	if err != nil {
+		return err
+	}
+
 	fmt.Println("Updated class meta; deleted key:", key)
+	return nil
 }

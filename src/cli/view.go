@@ -1,25 +1,25 @@
 package cli
 
 import (
-	"class/src/storage"
-	"class/src/types"
+	"class/src/class"
 	"fmt"
 	"strings"
 )
 
-func classView(id string) {
-	exists := storage.Handle(id, func(class *types.Class) bool {
-		fmt.Println("ID:  ", class.ID)
-		fmt.Println("Name:", class.Name)
-		fmt.Println("Desc:", class.Desc)
-		fmt.Println("Tags:", strings.Join(class.Tags, ", "))
-		fmt.Println("Meta:")
-		for key, value := range class.Meta {
-			fmt.Println(key, "=>", value)
-		}
-		return false
-	})
-	if !exists {
-		fmt.Println("A class by that id does not exist.")
+func classView(id string) error {
+	c, err := class.Get(id)
+	if err != nil {
+		return err
 	}
+
+	fmt.Println("ID:  ", c.ID)
+	fmt.Println("Name:", c.Name)
+	fmt.Println("Desc:", c.Desc)
+	fmt.Println("Tags:", strings.Join(c.Tags, ", "))
+	fmt.Println("Meta:")
+	for key, value := range c.Meta {
+		fmt.Println(key, "=>", value)
+	}
+
+	return nil
 }

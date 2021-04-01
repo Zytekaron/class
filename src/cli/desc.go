@@ -1,17 +1,18 @@
 package cli
 
 import (
-	"class/src/storage"
-	"class/src/types"
+	"class/src/class"
 	"fmt"
 	"strings"
 )
 
-func classSetDesc(id string, args []string) {
+func classSetDesc(id string, args []string) error {
 	desc := strings.Join(args, " ")
-	storage.EnsureHandle(id, func(class *types.Class) bool {
-		class.Desc = desc
-		return true
-	})
+	err := class.SetDesc(id, desc)
+	if err != nil {
+		return err
+	}
+
 	fmt.Println("Updated class description to:", desc)
+	return nil
 }
