@@ -13,7 +13,7 @@ import (
 func main() {
 	cli.Init("0.1.1")
 
-	err := storage.Init()
+	err := storage.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
