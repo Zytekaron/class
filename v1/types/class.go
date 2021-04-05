@@ -6,11 +6,10 @@ import (
 )
 
 type Class struct {
-	ID   string
-	Name string
-	Desc string
-	Tags TagList
-	Meta map[string]string
+	ID   string                 `json:"_id" bson:"_id"`
+	Name string                 `json:"name" bson:"name"`
+	Tags TagList                `json:"tags" bson:"tags"`
+	Meta map[string]interface{} `json:"meta" bson:"meta"`
 }
 
 type TagList []string
@@ -19,7 +18,7 @@ func NewClass(id string) *Class {
 	return &Class{
 		ID:   id,
 		Tags: make([]string, 0),
-		Meta: make(map[string]string),
+		Meta: make(map[string]interface{}),
 	}
 }
 
@@ -44,6 +43,12 @@ func (t *TagList) Add(tag string) {
 	*t = append(*t, tag)
 }
 
+func (t *TagList) AddAll(tags []string) {
+	for _, tag := range tags {
+		t.Add(tag)
+	}
+}
+
 func (t *TagList) Remove(tag string) {
 	index := -1
 	for i, e := range *t {
@@ -55,6 +60,12 @@ func (t *TagList) Remove(tag string) {
 
 	slice := []string(*t)
 	*t = append(slice[:index], slice[index+1:]...)
+}
+
+func (t *TagList) RemoveAll(tags []string) {
+	for _, tag := range tags {
+		t.Remove(tag)
+	}
 }
 
 func (t *TagList) Has(tag string) bool {
