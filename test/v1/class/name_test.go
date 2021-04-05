@@ -1,7 +1,6 @@
 package class
 
 import (
-	"github.com/zytekaron/class/v1/class"
 	"testing"
 )
 
@@ -11,17 +10,17 @@ func TestName(t *testing.T) {
 	defer Cleanup()
 
 	name := "Class Name Example"
-	err := class.SetName(testID, name)
+	err := database.SetName(testID, name)
 	if err != nil {
 		t.Error(err)
 	}
 
-	n, err := class.GetName(testID)
+	c, err := database.Get(testID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if n != name {
-		t.Error("class names do not match:", n+",", name)
+	if c.Name != name {
+		t.Error("class names do not match:", c.Name+",", name)
 	}
 }

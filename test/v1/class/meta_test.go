@@ -1,7 +1,6 @@
 package class
 
 import (
-	"github.com/zytekaron/class/v1/class"
 	"testing"
 )
 
@@ -15,31 +14,30 @@ func TestMeta(t *testing.T) {
 	k3, v3 := "key3", "value3"
 	k4, v4 := "key4", "value4 long"
 
-	// Add keys manually
+	// Add meta
 
-	err := class.AddMeta(testID, k1, v1)
+	err := database.AddMeta(testID, k1, v1)
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = class.AddMeta(testID, k2, v2)
+	err = database.AddMeta(testID, k2, v2)
 	if err != nil {
 		t.Error(err)
 	}
 
-	// Bulk add keys
-
-	err = class.BulkAddMeta(testID, map[string]string{k3: v3, k4: v4})
+	err = database.AddMetaBulk(testID, map[string]interface{}{k3: v3, k4: v4})
 	if err != nil {
 		t.Error(err)
 	}
 
-	// Ensure all keys exist
+	// Ensure all meta exists
 
-	meta, err := class.GetMeta(testID)
+	c, err := database.Get(testID)
 	if err != nil {
 		t.Error(err)
 	}
+	meta := c.Meta
 	for key, value := range map[string]string{k1: v1, k2: v2, k3: v3, k4: v4} {
 		valueOut, ok := meta[key]
 		if !ok {
@@ -50,31 +48,30 @@ func TestMeta(t *testing.T) {
 		}
 	}
 
-	// Remove keys manually
+	// Remove meta
 
-	err = class.RemoveMeta(testID, k1)
+	err = database.RemoveMeta(testID, k1)
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = class.RemoveMeta(testID, k2)
+	err = database.RemoveMeta(testID, k2)
 	if err != nil {
 		t.Error(err)
 	}
 
-	// Bulk remove keys
-
-	err = class.BulkRemoveMeta(testID, []string{k3, k4})
+	err = database.RemoveMetaBulk(testID, []string{k3, k4})
 	if err != nil {
 		t.Error(err)
 	}
 
-	// Ensure no keys exist
+	// Ensure no meta exists
 
-	meta, err = class.GetMeta(testID)
+	c, err = database.Get(testID)
 	if err != nil {
 		t.Error(err)
 	}
+	meta = c.Meta
 	for range meta {
 		t.Error("meta should be empty, instead found:", meta)
 		break

@@ -1,41 +1,32 @@
 package class
 
 import (
-	"github.com/zytekaron/class/v1/class"
+	"github.com/zytekaron/class/v1/db"
 	"github.com/zytekaron/class/v1/types"
 	"testing"
 )
 
+var database db.Database
+
 func TestMain(m *testing.M) {
-	if err := class.Open(); err != nil {
+	// MongoDB tested privately; working at the same time
+	database = db.NewBadger(".class")
+
+	if err := database.Open(); err != nil {
 		panic(err)
 	}
-	defer func() {
-		if err := class.Close(); err != nil {
-			panic(err)
-		}
-	}()
 
 	m.Run()
-}
 
-func TestCreate(t *testing.T) {
-	defer Cleanup()
-
-	c, err := class.Create(testID)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if c.ID != testID {
-		t.Error("testID does not match:", testID+",", c.ID)
+	if err := database.Close(); err != nil {
+		panic(err)
 	}
 }
 
 func TestSave(t *testing.T) {
 	defer Cleanup()
 
-	err := class.Save(types.NewClass(testID))
+	err := database.Insert(types.NewClass(testID))
 	if err != nil {
 		t.Error(err)
 	}
@@ -46,7 +37,7 @@ func TestGet(t *testing.T) {
 	WithClass()
 	defer Cleanup()
 
-	c, err := class.Get(testID)
+	c, err := database.Get(testID)
 	if err != nil {
 		t.Error(err)
 	}
@@ -61,7 +52,7 @@ func TestBatch(t *testing.T) {
 	WithClass()
 	defer Cleanup()
 
-	res, err := class.Batch([]string{testID})
+	res, err := database.Batch([]string{testID})
 	if err != nil {
 		t.Error(err)
 	}
@@ -85,7 +76,7 @@ func TestAll(t *testing.T) {
 	WithClass()
 	defer Cleanup()
 
-	res, err := class.All()
+	res, err := database.All()
 	if err != nil {
 		t.Error(err)
 	}
@@ -111,12 +102,12 @@ func TestDelete(t *testing.T) {
 	WithClass()
 	defer Cleanup()
 
-	err := class.Delete(testID)
+	err := database.Delete(testID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	c, err := class.Get(testID)
+	c, err := database.Get(testID)
 	if c != nil {
 		t.Error("class was not deleted")
 	}

@@ -1,8 +1,6 @@
 package class
 
 import (
-	"github.com/zytekaron/class/v1/class"
-	"github.com/zytekaron/class/v1/types"
 	"testing"
 )
 
@@ -14,63 +12,59 @@ func TestTags(t *testing.T) {
 	t1, t2, t3, t4 := "tag1", "tag2", "tag 3", "tag 4"
 	all := []string{t1, t2, t3, t4}
 
-	// Add tags manually
+	// Add tags
 
-	err := class.AddTag(testID, t1)
+	err := database.AddTag(testID, t1)
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = class.AddTag(testID, t2)
+	err = database.AddTag(testID, t2)
 	if err != nil {
 		t.Error(err)
 	}
 
-	// Bulk add tags
-
-	err = class.AddTags(testID, []string{t3, t4})
+	err = database.AddTags(testID, []string{t3, t4})
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Ensure all tags exist
 
-	tags, err := class.GetTags(testID)
-	if err != nil {
-		t.Error(err)
-	}
-	tl := types.TagList(tags)
-	if !tl.HasAll(all) {
-		t.Error("does not contain all tags:", tags, all)
-	}
-
-	// Remove tags manually
-
-	err = class.RemoveTag(testID, t1)
+	c, err := database.Get(testID)
 	if err != nil {
 		t.Error(err)
 	}
 
-	err = class.RemoveTag(testID, t2)
+	if !c.Tags.HasAll(all) {
+		t.Error("does not contain all tags:", c.Tags, all)
+	}
+
+	// Remove tags
+
+	err = database.RemoveTag(testID, t1)
 	if err != nil {
 		t.Error(err)
 	}
 
-	// Bulk remove tags
+	err = database.RemoveTag(testID, t2)
+	if err != nil {
+		t.Error(err)
+	}
 
-	err = class.RemoveTags(testID, []string{t3, t4})
+	err = database.RemoveTags(testID, []string{t3, t4})
 	if err != nil {
 		t.Error(err)
 	}
 
 	// Ensure no tags exist
 
-	tags, err = class.GetTags(testID)
+	c, err = database.Get(testID)
 	if err != nil {
 		t.Error(err)
 	}
-	for range tags {
-		t.Error("tags should be empty, instead found:", tags)
+	for range c.Tags {
+		t.Error("tags should be empty, instead found:", c.Tags)
 		break
 	}
 }
