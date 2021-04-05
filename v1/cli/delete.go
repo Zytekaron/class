@@ -2,11 +2,10 @@ package cli
 
 import (
 	"fmt"
-	"github.com/zytekaron/class/v1/class"
 )
 
 func classDelete(id string) error {
-	err := class.Delete(id)
+	err := database.Delete(id)
 	if err != nil {
 		return err
 	}

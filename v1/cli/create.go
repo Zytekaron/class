@@ -2,11 +2,11 @@ package cli
 
 import (
 	"fmt"
-	"github.com/zytekaron/class/v1/class"
+	"github.com/zytekaron/class/v1/types"
 )
 
 func classCreate(id string) error {
-	_, err := class.Create(id)
+	err := database.Insert(types.NewClass(id))
 	if err != nil {
 		return err
 	}

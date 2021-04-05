@@ -3,7 +3,6 @@ package cli
 import (
 	"errors"
 	"fmt"
-	"github.com/zytekaron/class/v1/class"
 	"strings"
 )
 
@@ -12,7 +11,7 @@ func classAddTags(id string, args []string) error {
 		return errors.New("at least one tag needs to be defined")
 	}
 
-	err := class.AddTags(id, args)
+	err := database.AddTags(id, args)
 	if err != nil {
 		return err
 	}
@@ -26,7 +25,7 @@ func classRemoveTags(id string, args []string) error {
 		return errors.New("at least one tag needs to be defined")
 	}
 
-	err := class.RemoveTags(id, args)
+	err := database.RemoveTags(id, args)
 	if err != nil {
 		return err
 	}
